@@ -1,0 +1,186 @@
+" -------------------------------------------------------------------------------
+" Main Configuration
+" -------------------------------------------------------------------------------
+
+" Main mappers
+let mapleader = " "
+imap jj <Esc>
+map <leader><leader> <Plug>(easymotion-prefix)
+
+" Basic stuff
+set ignorecase
+set smartcase
+set scrolloff=3
+set gdefault
+set backspace=indent,eol,start
+set idearefactormode=keep
+set ideamarks
+
+" Idea specific settings
+set ideajoin
+set ideastatusicon=gray
+
+" Clipboard support
+set clipboard=unnamed
+set clipboard+=ideaput
+
+" Sounds
+set noerrorbells
+set visualbell
+
+" Search
+set hlsearch
+set incsearch
+nmap <leader>, :nohlsearch<cr>
+
+" Plugins
+set surround
+set multiple-cursors
+set highlightedyank
+set NERDTree
+set easymotion " https://github.com/easymotion/vim-easymotion/blob/master/doc/easymotion.txt
+
+" Source ideavimrc
+nmap <leader>v <Action>(IdeaVim.ReloadVimRc.reload)
+
+" delete without yanking
+nnoremap x "_x
+nnoremap X "_X
+vnoremap x "_x
+vnoremap X "_X
+
+nnoremap c "_c
+nnoremap C "_C
+vnoremap c "_c
+vnoremap C "_C
+
+nnoremap d "_d
+nnoremap D "_D
+vnoremap d "_d
+vnoremap D "_D
+
+vnoremap p "_dp
+vnoremap P "_dP
+
+" Remap Cut
+vnoremap <leader>x d
+
+" Remap Undo
+map U <C-R>
+
+" Remap Newline
+nmap o o<Esc>
+nmap O O<Esc>
+
+
+" -------------------------------------------------------------------------------
+" Navigation
+" -------------------------------------------------------------------------------
+
+" Tree mode
+map <C-j> <Action>(Tree-selectNext)
+map <C-k> <Action>(Tree-selectPrevious)
+
+" Go to next/previous word
+nnoremap <C-h> b
+nnoremap <C-l> w
+vnoremap <C-h> b
+vnoremap <C-l> w
+nnoremap <C-S-h> B
+nnoremap <C-S-l> W
+vnoremap <C-S-h> B
+vnoremap <C-S-l> W
+
+" Insert Mode
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
+cnoremap <C-h> <Left>
+cnoremap <C-j> <Down>
+cnoremap <C-k> <Up>
+cnoremap <C-l> <Right>
+
+" Scroll
+nnoremap <C-j> <C-e><C-e>
+nnoremap <C-k> <C-y><C-y>
+
+" Windows Split
+map <leader>k <Action>(PrevSplitter)
+map <leader>j <Action>(NextSplitter)
+map <leader>sr <Action>(MoveTabRight)
+map <leader>sl <Action>(MoveTabLeft)
+map <leader>sm <Action>(MoveEditorToOppositeTabGroup)
+
+" Close Windows
+map <leader>q <Action>(CloseEditor)
+map <leader>Q <Action>(CloseAllEditors)
+map <leader>w <Action>(CloseAllEditorsButActive)
+
+" Go to Error
+nmap <leader>e <Action>(GotoNextError)
+nmap <leader>E <Action>(GotoPreviousError)
+
+
+
+" -------------------------------------------------------------------------------
+" Manipulations
+" -------------------------------------------------------------------------------
+
+" Expend / Shrink selection
+nmap <A-w> <Action>(EditorSelectWord)
+nmap <A-S-w> <Action>(EditorUnSelectWord)
+
+" Comment line & block
+map ,cl <Action>(CommentByLineComment)
+map ,cb <Action>(CommentByBlockComment)
+
+" Select all
+nmap <leader>a <Action>($SelectAll)
+
+" Duplicate line or selection
+nmap <leader>d <Action>(EditorDuplicate)
+
+" -------------------------------------------------------------------------------
+" IDEA commands
+" -------------------------------------------------------------------------------
+
+" Vim track Id
+map <leader>t <Action>(VimFindActionIdAction)
+
+" Popups stuff
+map <leader>u <Action>(FileStructurePopup)
+map <leader>I <Action>(ShowErrorDescription)
+map <leader>i <Action>(QuickJavaDoc)
+map <leader>p <Action>(ParameterInfo)
+map <leader>h <Action>(RecentFiles)
+
+" Gradle
+map <leader>g <Action>(Android.SyncProject)
+
+" Maven
+map <leader>m <Action>(ExternalSystem.ProjectRefreshAction
+
+" Refactoring
+nmap <leader>re <Action>(RenameElement)
+nmap <leader>rs <Action>(ChangeSignature)
+vmap <leader>m <Action>(ExtractFunction)
+
+" Expend / collapse code
+nmap ,ec <Action>(CollapseRegion)
+nmap ,eC <Action>(CollapseAllRegions)
+nmap ,ee <Action>(ExpandRegion)
+nmap ,eE <Action>(ExpandAllRegions)
+
+" Manage Windows
+nmap <leader>l <Action>(HideAllWindows)
+
+" Open/Go to declaration
+nmap <leader>o <Action>(GotoDeclaration)
+
+
+" -------------------------------------------------------------------------------
+" Git commands
+" -------------------------------------------------------------------------------
+
+nmap ,gcb <Action>(Git.CompareWithBranch)
