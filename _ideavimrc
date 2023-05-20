@@ -1,69 +1,38 @@
-" -------------------------------------------------------------------------------
-" Main Configuration
-" -------------------------------------------------------------------------------
+" --------------------------------------------------------------------------------------------
+" Main Configuration - https://github.com/JetBrains/ideavim/blob/master/doc/set-commands.md
+" --------------------------------------------------------------------------------------------
+
+" Clear search input
+let @/ = "" 
+" Alt key for mac
+for i in range(97,122)
+  let c = nr2char(i)
+  exec "map \e".c." <M-".c.">"
+  exec "map! \e".c." <M-".c.">"
+endfor
 
 " Main mappers
 let mapleader = " "
-imap jj <Esc>
-map <leader><leader> <Plug>(easymotion-prefix)
+imap jj <esc>
 
 " Basic stuff
-set ignorecase
-set smartcase
-set scrolloff=3
-set gdefault
+set smartcase " no ignore case when pattern is uppercase
+set scroll=8 " lines to scroll with CTRL-U and CTRL-D
+set scrolloff=8 " minimum number of lines above and below the cursor
+set visualbell " Use visual bell instead of beeping
 set backspace=indent,eol,start
-set idearefactormode=keep
-set ideamarks
-
-" Idea specific settings
-set ideajoin
-set ideastatusicon=gray
-
-" Clipboard support
 set clipboard=unnamed
 set clipboard+=ideaput
+set hlsearch " highlight matches with the last search pattern
+set incsearch " show where search pattern typed so far matches
 
-" Sounds
-set noerrorbells
-set visualbell
+" Idea specific settings
+set ideamarks " Sync IJ bookmarks and Vim marks
+set ideajoin " Join command will be performed via IDE
+set idearefactormode=keep " Mode on refactoring (keep / select / visual)
 
-" Search
-set hlsearch
-set incsearch
+" Map hide current search highlight
 nmap <leader>, :nohlsearch<cr>
-
-" Plugins
-set surround
-set multiple-cursors
-set highlightedyank
-set NERDTree
-set easymotion " https://github.com/easymotion/vim-easymotion/blob/master/doc/easymotion.txt
-
-" Source ideavimrc
-nmap <leader>v <Action>(IdeaVim.ReloadVimRc.reload)
-
-" delete without yanking
-nnoremap x "_x
-nnoremap X "_X
-vnoremap x "_x
-vnoremap X "_X
-
-nnoremap c "_c
-nnoremap C "_C
-vnoremap c "_c
-vnoremap C "_C
-
-nnoremap d "_d
-nnoremap D "_D
-vnoremap d "_d
-vnoremap D "_D
-
-vnoremap p "_dp
-vnoremap P "_dP
-
-" Remap Cut
-vnoremap <leader>x d
 
 " Remap Undo
 map U <C-R>
@@ -72,10 +41,42 @@ map U <C-R>
 nmap o o<Esc>
 nmap O O<Esc>
 
+" Replace currently selected text with default register
+" Without yanking it
+vnoremap p "_dP
 
-" -------------------------------------------------------------------------------
+" Delete without yanking
+nnoremap d "_d
+vnoremap d "_d
+
+
+" --------------------------------------------------------------------------------------------
+" Plugins - https://github.com/JetBrains/ideavim/wiki/IdeaVim-Plugins
+" --------------------------------------------------------------------------------------------
+
+set highlightedyank
+set NERDTree " Tips : When on project tree, type <o> to open and <x> to close. Use <maj> to do it recursively.
+
+set easymotion " https://github.com/AlexPl292/IdeaVim-EasyMotion
+map <leader>f <plug>(easymotion-f)
+map <leader>F <plug>(easymotion-F)
+
+set multiple-cursors
+nmap mc <Plug>NextWholeOccurrence
+xmap mc <Plug>NextWholeOccurrence
+nmap gmc <Plug>NextOccurrence
+xmap gmc <Plug>NextOccurrence
+xmap mx <Plug>SkipOccurrence
+xmap mr <Plug>RemoveOccurrence
+nmap mC <Plug>AllWholeOccurrences
+xmap mC <Plug>AllWholeOccurrences
+nmap gmC <Plug>AllOccurrences
+xmap gmC <Plug>AllOccurrences
+
+
+" --------------------------------------------------------------------------------------------
 " Navigation
-" -------------------------------------------------------------------------------
+" --------------------------------------------------------------------------------------------
 
 " Tree mode
 map <C-j> <Action>(Tree-selectNext)
@@ -121,32 +122,46 @@ map <leader>w <Action>(CloseAllEditorsButActive)
 nmap <leader>e <Action>(GotoNextError)
 nmap <leader>E <Action>(GotoPreviousError)
 
+" Go to declaration / implementation
+nmap <leader>o <Action>(GotoDeclaration)
+nmap <leader>O <Action>(GotoImplementation)
 
 
-" -------------------------------------------------------------------------------
+" --------------------------------------------------------------------------------------------
 " Manipulations
-" -------------------------------------------------------------------------------
-
-" Expend / Shrink selection
-nmap <A-w> <Action>(EditorSelectWord)
-nmap <A-S-w> <Action>(EditorUnSelectWord)
+" --------------------------------------------------------------------------------------------
 
 " Comment line & block
 map ,cl <Action>(CommentByLineComment)
-map ,cb <Action>(CommentByBlockComment)
+vmap ,cb <Action>(CommentByBlockComment)
 
 " Select all
 nmap <leader>a <Action>($SelectAll)
 
-" Duplicate line or selection
+" Duplicate line
 nmap <leader>d <Action>(EditorDuplicate)
 
-" -------------------------------------------------------------------------------
-" IDEA commands
-" -------------------------------------------------------------------------------
+" Move line
+map <S-A-K> <Action>(MoveLineUp)
+map <S-A-J> <Action>(MoveLineDown)
 
-" Vim track Id
-map <leader>t <Action>(VimFindActionIdAction)
+
+" --------------------------------------------------------------------------------------------
+" IDEA commands
+" --------------------------------------------------------------------------------------------
+
+map <leader>R <Action>(Run)
+map <leader>S <Action>(Stop)
+
+" Gradle
+map <leader>b <Action>(MakeGradleProject)
+map <leader>B <Action>(RebuildGradleProject)
+map <leader>c <Action>(CleanGradleProject)
+map <leader>g <Action>(Android.SyncProject)
+
+" Vim
+nmap <leader>t <Action>(VimFindActionIdAction)
+nmap <leader>v <Action>(IdeaVim.ReloadVimRc.reload)
 
 " Popups stuff
 map <leader>u <Action>(FileStructurePopup)
@@ -155,16 +170,10 @@ map <leader>i <Action>(QuickJavaDoc)
 map <leader>p <Action>(ParameterInfo)
 map <leader>h <Action>(RecentFiles)
 
-" Gradle
-map <leader>g <Action>(Android.SyncProject)
-
-" Maven
-map <leader>m <Action>(ExternalSystem.ProjectRefreshAction
-
 " Refactoring
 nmap <leader>re <Action>(RenameElement)
 nmap <leader>rs <Action>(ChangeSignature)
-vmap <leader>m <Action>(ExtractFunction)
+vmap <leader>rf <Action>(ExtractFunction)
 
 " Expend / collapse code
 nmap ,ec <Action>(CollapseRegion)
@@ -175,12 +184,9 @@ nmap ,eE <Action>(ExpandAllRegions)
 " Manage Windows
 nmap <leader>l <Action>(HideAllWindows)
 
-" Open/Go to declaration
-nmap <leader>o <Action>(GotoDeclaration)
 
-
-" -------------------------------------------------------------------------------
+" --------------------------------------------------------------------------------------------
 " Git commands
-" -------------------------------------------------------------------------------
+" --------------------------------------------------------------------------------------------
 
 nmap ,gcb <Action>(Git.CompareWithBranch)
