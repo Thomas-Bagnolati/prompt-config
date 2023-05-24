@@ -1,77 +1,35 @@
 " --------------------------------------------------------------------------------------------
-" Main Configuration - https://github.com/JetBrains/ideavim/blob/master/doc/set-commands.md
+" Main Configuration
 " --------------------------------------------------------------------------------------------
 
-" Clear search input
-let @/ = "" 
-" Alt key for mac
-for i in range(97,122)
-  let c = nr2char(i)
-  exec "map \e".c." <M-".c.">"
-  exec "map! \e".c." <M-".c.">"
-endfor
-
-" Main mappers
-let mapleader = " "
-imap jj <esc>
-
-" Basic stuff
-set smartcase " no ignore case when pattern is uppercase
-set scroll=8 " lines to scroll with CTRL-U and CTRL-D
-set scrolloff=8 " minimum number of lines above and below the cursor
-set visualbell " Use visual bell instead of beeping
-set backspace=indent,eol,start
-set clipboard=unnamed
-set clipboard+=ideaput
-set hlsearch " highlight matches with the last search pattern
-set incsearch " show where search pattern typed so far matches
+" Source .vimrc file
+source ~/.vimrc
 
 " Idea specific settings
+set clipboard+=ideaput " Enable native idea paste action for put operations
 set ideamarks " Sync IJ bookmarks and Vim marks
 set ideajoin " Join command will be performed via IDE
 set idearefactormode=keep " Mode on refactoring (keep / select / visual)
 
-" Map hide current search highlight
-nmap <leader>, :nohlsearch<cr>
-
-" Remap Undo
-map U <C-R>
-
-" Remap Newline
-nmap o o<Esc>
-nmap O O<Esc>
-
-" Replace currently selected text with default register
-" Without yanking it
-vnoremap p "_dP
-
-" Delete without yanking
-nnoremap d "_d
-vnoremap d "_d
-
 
 " --------------------------------------------------------------------------------------------
-" Plugins - https://github.com/JetBrains/ideavim/wiki/IdeaVim-Plugins
+" Plugins
 " --------------------------------------------------------------------------------------------
 
 set highlightedyank
-set NERDTree " Tips : When on project tree, type <o> to open and <x> to close. Use <maj> to do it recursively.
-
-set easymotion " https://github.com/AlexPl292/IdeaVim-EasyMotion
-map <leader>f <plug>(easymotion-f)
-map <leader>F <plug>(easymotion-F)
-
+set NERDTree
+set easymotion
 set multiple-cursors
-nmap mc <Plug>NextWholeOccurrence
-xmap mc <Plug>NextWholeOccurrence
-nmap gmc <Plug>NextOccurrence
-xmap gmc <Plug>NextOccurrence
-xmap mx <Plug>SkipOccurrence
-xmap mr <Plug>RemoveOccurrence
-nmap mC <Plug>AllWholeOccurrences
-xmap mC <Plug>AllWholeOccurrences
-nmap gmC <Plug>AllOccurrences
-xmap gmC <Plug>AllOccurrences
+" Whole means only matching all the name : for 'plug' will not take 'plugin'
+" Else, for 'plug' will take the 'plug' in 'plugin'
+nmap <C-n> <Plug>NextWholeOccurrence
+xmap <C-n> <Plug>NextWholeOccurrence
+nmap <C-S-n> <Plug>NextOccurrence
+xmap <C-x> <Plug>SkipOccurrence
+xmap <C-r> <Plug>RemoveOccurrence
+" Takes all in one time
+nmap <leader>mc <Plug>AllWholeOccurrences
+nmap <leader>mC <Plug>AllOccurrences
 
 
 " --------------------------------------------------------------------------------------------
@@ -82,111 +40,88 @@ xmap gmC <Plug>AllOccurrences
 map <C-j> <Action>(Tree-selectNext)
 map <C-k> <Action>(Tree-selectPrevious)
 
-" Go to next/previous word
-nnoremap <C-h> b
-nnoremap <C-l> w
-vnoremap <C-h> b
-vnoremap <C-l> w
-nnoremap <C-S-h> B
-nnoremap <C-S-l> W
-vnoremap <C-S-h> B
-vnoremap <C-S-l> W
-
-" Insert Mode
-inoremap <C-h> <Left>
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-inoremap <C-l> <Right>
-cnoremap <C-h> <Left>
-cnoremap <C-j> <Down>
-cnoremap <C-k> <Up>
-cnoremap <C-l> <Right>
-
-" Scroll
-nnoremap <C-j> <C-e><C-e>
-nnoremap <C-k> <C-y><C-y>
-
-" Windows Split
-map <leader>k <Action>(PrevSplitter)
-map <leader>j <Action>(NextSplitter)
-map <leader>sr <Action>(MoveTabRight)
-map <leader>sl <Action>(MoveTabLeft)
-map <leader>sm <Action>(MoveEditorToOppositeTabGroup)
-
 " Close Windows
 map <leader>q <Action>(CloseEditor)
+map <leader>q <Action>(CloseEditor)
 map <leader>Q <Action>(CloseAllEditors)
-map <leader>w <Action>(CloseAllEditorsButActive)
+map <leader>W <Action>(CloseAllEditorsButActive)
 
 " Go to Error
 nmap <leader>e <Action>(GotoNextError)
 nmap <leader>E <Action>(GotoPreviousError)
 
-" Go to declaration / implementation
+" Go to Declaration / Implementation
 nmap <leader>o <Action>(GotoDeclaration)
 nmap <leader>O <Action>(GotoImplementation)
 
+" Go to Element
+map <leader>n <Action>(GotoNextElementUnderCaretUsage)
+map <leader>N <Action>(GotoPrevElementUnderCaretUsage)
+
+" Go to Method
+map <A-j> <Action>(MethodDown)
+map <A-k> <Action>(MethodUp)
 
 " --------------------------------------------------------------------------------------------
 " Manipulations
 " --------------------------------------------------------------------------------------------
 
 " Comment line & block
-map ,cl <Action>(CommentByLineComment)
 vmap ,cb <Action>(CommentByBlockComment)
+map ,cl <Action>(CommentByLineComment)
 
 " Select all
 nmap <leader>a <Action>($SelectAll)
 
+" Move lines
+map <S-A-j> <Action>(MoveLineDown)
+map <S-A-k> <Action>(MoveLineUp)
+
 " Duplicate line
-nmap <leader>d <Action>(EditorDuplicate)
-
-" Move line
-map <S-A-K> <Action>(MoveLineUp)
-map <S-A-J> <Action>(MoveLineDown)
-
+map <leader>d <Action>(EditorDuplicate)
 
 " --------------------------------------------------------------------------------------------
 " IDEA commands
 " --------------------------------------------------------------------------------------------
 
-map <leader>R <Action>(Run)
-map <leader>S <Action>(Stop)
+" Run
+map <leader>r <Action>(Run)
+map <leader>s <Action>(Stop)
 
 " Gradle
-map <leader>b <Action>(MakeGradleProject)
-map <leader>B <Action>(RebuildGradleProject)
-map <leader>c <Action>(CleanGradleProject)
-map <leader>g <Action>(Android.SyncProject)
+map ,gs <Action>(Android.SyncProject)
+map ,gb <Action>(MakeGradleProject)
+map ,grb <Action>(RebuildGradleProject)
+map ,gc <Action>(CleanGradleProject)
+
+nmap <leader>y <Action>(GotoClass)
 
 " Vim
 nmap <leader>t <Action>(VimFindActionIdAction)
-nmap <leader>v <Action>(IdeaVim.ReloadVimRc.reload)
+nmap ,sv <Action>(IdeaVim.ReloadVimRc.reload)
+nmap ,ev :e ~/.ideavimrc<CR>
 
 " Popups stuff
-map <leader>u <Action>(FileStructurePopup)
-map <leader>I <Action>(ShowErrorDescription)
-map <leader>i <Action>(QuickJavaDoc)
-map <leader>p <Action>(ParameterInfo)
-map <leader>h <Action>(RecentFiles)
+nmap <leader>u <Action>(FileStructurePopup)
+nmap <leader>I <Action>(ShowErrorDescription)
+nmap <leader>i <Action>(QuickJavaDoc)
+nmap <leader>p <Action>(ParameterInfo)
+nmap <leader>h <Action>(RecentFiles)
 
 " Refactoring
-nmap <leader>re <Action>(RenameElement)
-nmap <leader>rs <Action>(ChangeSignature)
-vmap <leader>rf <Action>(ExtractFunction)
+nmap ,re <Action>(RenameElement)
+nmap ,rs <Action>(ChangeSignature)
+vmap ,rf <Action>(ExtractFunction)
 
 " Expend / collapse code
-nmap ,ec <Action>(CollapseRegion)
-nmap ,eC <Action>(CollapseAllRegions)
-nmap ,ee <Action>(ExpandRegion)
-nmap ,eE <Action>(ExpandAllRegions)
+map ,ec <Action>(CollapseRegion)
+map ,eC <Action>(CollapseAllRegions)
+map ,ee <Action>(ExpandRegion)
+map ,eE <Action>(ExpandAllRegions)
 
-" Manage Windows
+" Hide / show all Panes
 nmap <leader>l <Action>(HideAllWindows)
 
-
-" --------------------------------------------------------------------------------------------
-" Git commands
-" --------------------------------------------------------------------------------------------
-
-nmap ,gcb <Action>(Git.CompareWithBranch)
+" DevKit
+nmap <leader>k <Action>(DevKit.ApplyTheme)
+nmap <leader>K <Action>(DevKit.RollbackTheme)
