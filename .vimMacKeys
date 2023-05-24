@@ -1,0 +1,54 @@
+" Keyboard remap for Mac fr
+map æ <A-a>
+map Â <A-z>
+map ê <A-e>
+map ® <A-r>
+map † <A-t>
+map Ú <A-y>
+map º <A-u>
+map î <A-i>
+map œ <A-o>
+map π <A-p>
+map ‡ <A-q>
+map Ò <A-s>
+map ∂ <A-d>
+map ƒ <A-f>
+map ﬁ <A-g>
+map Ì <A-h>
+map Ï <A-j>
+map È <A-k>
+map ¬ <A-l>
+map µ <A-m>
+map ‹ <A-w>
+map ≈ <A-x>
+map © <A-c>
+map ◊ <A-v>
+map ß <A-b>
+map ~ <A-n>  " don't want to remap this one 
+
+map Æ <S-A-a>
+map Å <S-A-z>
+map Ê <S-A-e>
+map ‚ <S-A-r>
+map ™ <S-A-t>
+map Ÿ <S-A-y>
+map ª <S-A-u>
+map ï <S-A-i>
+map Œ <S-A-o>
+map ∏ <S-A-p>
+map Ω <S-A-q>
+map ∑ <S-A-s>
+map ∆ <S-A-d>
+map · <S-A-f>
+map ﬂ <S-A-g>
+map Î <S-A-h>
+map Í <S-A-j>
+map Ë <S-A-k>
+"map | <S-A-l> " make conflicts I think cause it's a coditional key
+map Ó <S-A-m>
+map › <S-A-w>
+map ⁄ <S-A-x>
+map ¢ <S-A-c>
+map √ <S-A-v>
+map ∫ <S-A-b>
+map ı <S-A-n>
