@@ -1,3 +1,3 @@
-# ideavimrc
+# Vim Config
 
-My Ideavimrc file used on my Intellij IDEs.
+My personal vim config
