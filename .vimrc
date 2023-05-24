@@ -1,7 +1,7 @@
 " Clear search input on start
 let @/ = "" 
 
-" Keyboard remap for Mac, here condition is 
+" Keyboard remap for Mac only, here is checking if is a silicon chip.
 if system('arch') == "arm64"
     source ~/.vimMacKeys
 endif 
