@@ -1,4 +1,4 @@
-# Vim Config
+# Prompt config
 Represents my personal vim configuration.
 
 * [.ideavimrc](.ideavimrc) is the config for IDEA used most the time on Android Studio, he source [init.vim](init.vim) file.
