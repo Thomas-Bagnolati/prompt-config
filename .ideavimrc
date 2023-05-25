@@ -1,9 +1,9 @@
-" --------------------------------------------------------------------------------------------
-" Main Configuration
-" --------------------------------------------------------------------------------------------
+" -------------------------------
+"          IdeaVimConfig           
+" -------------------------------
 
-" Source .vimrc file
-source ~/.vimrc
+" Source NeoVim config file
+source ~/.config/nvim/init.vim
 
 " Idea specific settings
 set clipboard+=ideaput " Enable native idea paste action for put operations
@@ -12,36 +12,24 @@ set ideajoin " Join command will be performed via IDE
 set idearefactormode=keep " Mode on refactoring (keep / select / visual)
 
 
-" --------------------------------------------------------------------------------------------
-" Plugins
-" --------------------------------------------------------------------------------------------
-
+" Plugins ---------------------->
 set highlightedyank
 set NERDTree
 set easymotion
 set multiple-cursors
-" Whole means only matching all the name : for 'plug' will not take 'plugin'
-" Else, for 'plug' will take the 'plug' in 'plugin'
+" Remap multiple-cursors
 nmap <C-n> <Plug>NextWholeOccurrence
 xmap <C-n> <Plug>NextWholeOccurrence
 nmap <C-S-n> <Plug>NextOccurrence
 xmap <C-x> <Plug>SkipOccurrence
 xmap <C-r> <Plug>RemoveOccurrence
-" Takes all in one time
 nmap <leader>mc <Plug>AllWholeOccurrences
 nmap <leader>mC <Plug>AllOccurrences
 
 
-" --------------------------------------------------------------------------------------------
-" Navigation
-" --------------------------------------------------------------------------------------------
-
-" Tree mode
-map <C-j> <Action>(Tree-selectNext)
-map <C-k> <Action>(Tree-selectPrevious)
-
+" MapKeys ---------------------->
+" -> Navigation 🚕
 " Close Windows
-map <leader>q <Action>(CloseEditor)
 map <leader>q <Action>(CloseEditor)
 map <leader>Q <Action>(CloseAllEditors)
 map <leader>W <Action>(CloseAllEditorsButActive)
@@ -54,20 +42,24 @@ nmap <leader>E <Action>(GotoPreviousError)
 nmap <leader>o <Action>(GotoDeclaration)
 nmap <leader>O <Action>(GotoImplementation)
 
+" Go to class
+nmap <leader>y <Action>(GotoClass)
+"
+" Go to recent file
+nmap <leader>h <Action>(RecentFiles)
+
 " Go to Element
 map <leader>n <Action>(GotoNextElementUnderCaretUsage)
 map <leader>N <Action>(GotoPrevElementUnderCaretUsage)
 
 " Go to Method
-map <A-j> <Action>(MethodDown)
-map <A-k> <Action>(MethodUp)
+map <leader>j <Action>(MethodDown)
+map <leader>k <Action>(MethodUp)
 
-" --------------------------------------------------------------------------------------------
-" Manipulations
-" --------------------------------------------------------------------------------------------
 
+" -> Manipulations 🖋️
 " Comment line & block
-vmap ,cb <Action>(CommentByBlockComment)
+map ,cb <Action>(CommentByBlockComment)
 map ,cl <Action>(CommentByLineComment)
 
 " Select all
@@ -80,10 +72,8 @@ map <S-A-k> <Action>(MoveLineUp)
 " Duplicate line
 map <leader>d <Action>(EditorDuplicate)
 
-" --------------------------------------------------------------------------------------------
-" IDEA commands
-" --------------------------------------------------------------------------------------------
 
+" -> IDEA 🚀
 " Run
 map <leader>r <Action>(Run)
 map <leader>s <Action>(Stop)
@@ -93,8 +83,6 @@ map ,gs <Action>(Android.SyncProject)
 map ,gb <Action>(MakeGradleProject)
 map ,grb <Action>(RebuildGradleProject)
 map ,gc <Action>(CleanGradleProject)
-
-nmap <leader>y <Action>(GotoClass)
 
 " Vim
 nmap <leader>t <Action>(VimFindActionIdAction)
@@ -106,7 +94,6 @@ nmap <leader>u <Action>(FileStructurePopup)
 nmap <leader>I <Action>(ShowErrorDescription)
 nmap <leader>i <Action>(QuickJavaDoc)
 nmap <leader>p <Action>(ParameterInfo)
-nmap <leader>h <Action>(RecentFiles)
 
 " Refactoring
 nmap ,re <Action>(RenameElement)
@@ -125,3 +112,9 @@ nmap <leader>l <Action>(HideAllWindows)
 " DevKit
 nmap <leader>k <Action>(DevKit.ApplyTheme)
 nmap <leader>K <Action>(DevKit.RollbackTheme)
+
+
+
+"
+""
+""" Makix - 2023.05.24
